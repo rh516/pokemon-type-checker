@@ -1,55 +1,57 @@
 import React from "react";
-import ListOut from "../ListOutTypes";
+import ListOutTypes from "../ListOutTypes";
 import {pokeTypes, typeEff} from "../../data";
 
 function Results(props) {
+    function getTypesArr(param) {
+        if (!props.type2Prop) {
+            if (param === "weak") {
+                return pokeTypes.filter(type => typeEff[props.type1Prop][type] >= 2);
+            }
+            else if (param === "resist"){
+                return pokeTypes.filter(type => !Number.isInteger(typeEff[props.type1Prop][type]));
+            }
+            else if (param === "immune") {
+                return pokeTypes.filter(type => typeEff[props.type1Prop][type] === 0);
+            }
+        } else {
+            if (param === "weak") {
+                return pokeTypes.filter(type => typeEff[props.type1Prop][type] * typeEff[props.type2Prop][type] >= 2);
+            }
+            else if (param === "resist") {
+                return pokeTypes.filter(type => !Number.isInteger(typeEff[props.type1Prop][type] * typeEff[props.type2Prop][type]));
+            }
+            else if (param === "immune") {
+                return pokeTypes.filter(type => typeEff[props.type1Prop][type] * typeEff[props.type2Prop][type] === 0);
+            }
+        } 
+    }
+
     return (
         <div>
-            {!props.type2Prop ?
-                <div>
-                    <ListOut 
-                        heading="Your Pokémon Is Weak to These Types:"
-                        arr={pokeTypes.filter(type => typeEff[props.type1Prop][type] >= 2)}
-                    />
-                    <ListOut 
+            <div>
+                <ListOutTypes 
+                    heading="Your Pokémon Is Weak to These Types:"
+                    arr={getTypesArr("weak")}
+                />
+                {getTypesArr("resist").length > 0 ?
+                    <ListOutTypes 
                         heading="Your Pokémon Is Resistant to These Types:"
-                        arr={pokeTypes.filter(type => !Number.isInteger(typeEff[props.type1Prop][type]))}
+                        arr={getTypesArr("resist")}
                     />
-                    {pokeTypes.filter(type => typeEff[props.type1Prop][type] === 0).length > 0 ?
-                        <ListOut 
-                            heading="Your Pokémon Is Immune to These Types:"
-                            arr={pokeTypes.filter(type => typeEff[props.type1Prop][type] === 0)}
-                        />
-                    :
-                        null
-                    }
-                    <button onClick={props.onClick}>Go Back</button>
-                </div>
-            :
-                <div>
-                    <ListOut 
-                        heading="Your Pokémon Is Weak to These Types:"
-                        arr={pokeTypes.filter(type => typeEff[props.type1Prop][type] * typeEff[props.type2Prop][type] >= 2)}
+                :
+                    null
+                }
+                {getTypesArr("immune").length > 0 ?
+                    <ListOutTypes 
+                        heading="Your Pokémon Is Immune to These Types:"
+                        arr={getTypesArr("immune")}
                     />
-                    {pokeTypes.filter(type => !Number.isInteger(typeEff[props.type1Prop][type] * typeEff[props.type2Prop][type])).length > 0 ?
-                        <ListOut 
-                            heading="Your Pokémon Is Resistant to These Types:"
-                            arr={pokeTypes.filter(type => !Number.isInteger(typeEff[props.type1Prop][type] * typeEff[props.type2Prop][type]))}
-                        />
-                    :
-                        null
-                    }
-                    {pokeTypes.filter(type => typeEff[props.type1Prop][type] * typeEff[props.type2Prop][type] === 0).length > 0 ?
-                        <ListOut 
-                            heading="Your Pokémon Is Immune to These Types:"
-                            arr={pokeTypes.filter(type => typeEff[props.type1Prop][type] * typeEff[props.type2Prop][type] === 0)}
-                        />
-                    :
-                        null
-                    }
-                    <button onClick={props.onClick}>Go Back</button>
-                </div>
-            }
+                :
+                    null
+                }
+                <button onClick={props.onClick}>Go Back</button>
+            </div>
         </div>
     );
 }

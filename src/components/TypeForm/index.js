@@ -7,7 +7,7 @@ function TypeForm(props) {
         type2: ""
     });
 
-
+    // form validation
     function handleSubmit(event) {
         if (!state.type1) {
             event.preventDefault();
