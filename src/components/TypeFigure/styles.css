@@ -1,0 +1,9 @@
+.figure {
+    display: inline-block;
+}
+
+.figure-caption {
+    text-transform: capitalize;
+    width: 64px;
+    text-align: center;
+}

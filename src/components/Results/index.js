@@ -1,6 +1,8 @@
 import React from "react";
 import ListOutTypes from "../ListOutTypes";
 import {pokeTypes, typeEff} from "../../data";
+import TypeFigure from "../TypeFigure";
+
 
 function Results(props) {
     function getTypesArr(param) {
@@ -30,6 +32,15 @@ function Results(props) {
     return (
         <div>
             <div>
+                <h3>Your Pokémon Type:</h3>
+                {!props.type2Prop ?
+                    <TypeFigure type={props.type1Prop}/>
+                :
+                    <div>
+                        <TypeFigure type={props.type1Prop}/>
+                        <TypeFigure type={props.type2Prop}/>
+                    </div>
+                }
                 <ListOutTypes 
                     heading="Your Pokémon Is Weak to These Types:"
                     arr={getTypesArr("weak")}
