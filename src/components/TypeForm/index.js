@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {pokeTypes} from "../../data";
+import "./styles.css";
 
 function TypeForm(props) {
     const [state, setState] = useState({
@@ -75,7 +76,7 @@ function TypeForm(props) {
                 value={state.type2}
                 onChange={handleChange}
             />
-            <button type="submit">Submit</button>
+            <button className="submit-btn" type="submit">Submit</button>
         </form>
     );
 }
