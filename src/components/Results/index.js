@@ -2,6 +2,7 @@ import React from "react";
 import ListOutTypes from "../ListOutTypes";
 import {pokeTypes, typeEff} from "../../data";
 import TypeFigure from "../TypeFigure";
+import "./styles.css";
 
 
 function Results(props) {
@@ -30,8 +31,8 @@ function Results(props) {
     }
 
     return (
-        <div>
-            <div>
+        <div className="results-div">
+            <div className="your-type-div">
                 <h3>Your Pokémon Type:</h3>
                 {!props.type2Prop ?
                     <TypeFigure type={props.type1Prop}/>
@@ -41,28 +42,28 @@ function Results(props) {
                         <TypeFigure type={props.type2Prop}/>
                     </div>
                 }
-                <ListOutTypes 
-                    heading="Your Pokémon Is Weak to These Types:"
-                    arr={getTypesArr("weak")}
-                />
-                {getTypesArr("resist").length > 0 ?
-                    <ListOutTypes 
-                        heading="Your Pokémon Is Resistant to These Types:"
-                        arr={getTypesArr("resist")}
-                    />
-                :
-                    null
-                }
-                {getTypesArr("immune").length > 0 ?
-                    <ListOutTypes 
-                        heading="Your Pokémon Is Immune to These Types:"
-                        arr={getTypesArr("immune")}
-                    />
-                :
-                    null
-                }
-                <button onClick={props.onClick}>Go Back</button>
             </div>
+            <ListOutTypes 
+                heading="Your Pokémon Is Weak to These Types:"
+                arr={getTypesArr("weak")}
+            />
+            {getTypesArr("resist").length > 0 ?
+                <ListOutTypes 
+                    heading="Your Pokémon Is Resistant to These Types:"
+                    arr={getTypesArr("resist")}
+                />
+            :
+                null
+            }
+            {getTypesArr("immune").length > 0 ?
+                <ListOutTypes 
+                    heading="Your Pokémon Is Immune to These Types:"
+                    arr={getTypesArr("immune")}
+                />
+            :
+                null
+            }
+            <button className="go-back" onClick={props.onClick}>Go Back</button>
         </div>
     );
 }
